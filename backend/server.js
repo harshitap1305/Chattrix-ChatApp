@@ -3,11 +3,22 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
+import messageRoutes from './routes/messageRoutes.js'
 import { ClerkExpressWithAuth } from '@clerk/clerk-sdk-node';
+import http from 'http';
+import { Server } from 'socket.io';
 
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+const io= new Server(server,{
+    cors:{
+        origin:"http://localhost:3000",
+        methods:["GET","POST"],
+        credentials:true
+    }
+})
 app.use(cors());
 app.use(express.json());
 
